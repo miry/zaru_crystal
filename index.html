@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "";
+</script>
+
+  <meta id="repository-name" content="github.com/szTheory/zaru_crystal">
+  <title>README - github.com/szTheory/zaru_crystal</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="github.com/szTheory/zaru_crystal/Zaru" data-name="zaru">
+      <a href="Zaru.html">Zaru</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1>zaru_crystal</h1>
+
+<p><a href="https://travis-ci.org/szTheory/zaru_crystal" target="_blank"><img src="https://travis-ci.org/szTheory/zaru_crystal.svg?branch=master" alt="Build Status"/></a> <a href="https://sztheory.github.io/zaru_crystal/" target="_blank"><img src="https://img.shields.io/badge/docs-available-brightgreen.svg" alt="Docs"/></a> <a href="https://github.com/szTheory/zaru_crystal/releases" target="_blank"><img src="https://img.shields.io/github/release/szTheory/zaru_crystal.svg" alt="GitHub release"/></a> <img src="https://img.shields.io/github/stars/szTheory/zaru_crystal?style=social" alt="GitHub stars"/></p>
+
+<p>Filename sanitization for Crystal. This is useful when you generate filenames for downloads from user input. Port of the <a href="https://github.com/madrobby/zaru" target="_blank">Zaru gem for Ruby</a>. </p>
+
+<h2>Installation</h2>
+
+<ol><li>Add the dependency to your <code>shard.yml</code>:</li></ol>
+
+<pre><code class="language-yaml"> dependencies:
+   zaru_crystal:
+     github: szTheory/zaru_crystal</code></pre>
+
+<ol><li>Run <code>shards install</code></li></ol>
+
+<h2>Usage</h2>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;zaru_crystal&quot;</span></code></pre>
+
+<pre><code class="language-crystal"><span class="t">Zaru</span>.sanitize! <span class="s">&quot;  what\ēver//wëird:user:înput:&quot;</span>
+<span class="c"># =&gt; &quot;whatēverwëirduserînput&quot;</span></code></pre>
+
+<p>Zaru takes a given filename (a string) and normalizes, filters and truncates it.</p>
+
+<p>It removes the bad stuff but leaves unicode characters in place, so users can use whatever alphabets they want to. Zaru also doesn't remove whitespace– instead, any sequence of whitespace that is 1 or more characters in length is collapsed to a single space. Filenames are truncated so that they are at maximum 255 characters long.</p>
+
+<p>If extra breathing room is required (for example to add your own filename extension later),
+you can leave extra room with the <code>:padding</code> option:</p>
+
+<pre><code class="language-crystal"><span class="t">Zaru</span>.sanitize! <span class="s">&quot;A&quot;</span><span class="o">*</span><span class="n">400</span>, padding: <span class="n">100</span>
+<span class="c"># resulting filename is 145 characters long</span></code></pre>
+
+<p>If you need to customize the fallback filename you can add your own fallback
+with the <code>:fallback</code> option:</p>
+
+<pre><code class="language-crystal"><span class="t">Zaru</span>.sanitize! <span class="s">&quot;&lt;&lt;&lt;&quot;</span>, fallback: <span class="s">&quot;no_file&quot;</span>
+<span class="c"># resulting filename is &quot;no_file&quot;</span></code></pre>
+
+<h2>Bad things in filenames</h2>
+
+<p>Wikipedia has a <a href="http://en.wikipedia.org/wiki/Filename" target="_blank">good overview on filenames</a>. Basically, on modern-ish operating systems, the following characters  are considered no-no (Zaru filters these):</p>
+
+<pre><code><span class="s">/ \ ? * : | &quot; &lt; &gt;</code></pre>
+
+<p>Additionally the <a href="http://en.wikipedia.org/wiki/ASCII#ASCII_control_characters" target="_blank">ASCII control characters</a> (hexadecimal <code>00</code> to <code>1f</code>) are filtered.</p>
+
+<p>All <a href="http://en.wikipedia.org/wiki/Whitespace_character#Unicode" target="_blank">Unicode whitespace</a> at the beginning and end of the potential filename is removed, and any Unicode whitespace within the filename is collapse to a single space character.</p>
+
+<p><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx" target="_blank">Certain filenames are reserved in Windows</a> and are filtered.</p>
+
+<h2>TODO</h2>
+
+<ul><li>Extend test suite</li></ul>
+
+<p><a href="http://en.wikipedia.org/wiki/Zaru" target="_blank">Wait, what, Zaru?</a></p>
+
+<p><a href="https://github.com/szTheory/zaru_crystal" target="_blank">zaru_crystal</a> is licensed under the terms of the MIT license.</p>
+</div>
+</body>
+</html>
